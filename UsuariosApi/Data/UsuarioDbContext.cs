@@ -10,5 +10,8 @@ namespace UsuariosApi.Data
         {
 
         }
+
+
+        //public DbSet<Usuario> Usuarios => Set<Usuario>();
     }
 }

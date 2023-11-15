@@ -2,12 +2,11 @@
 
 namespace UsuariosApi.Data.Dtos.UsuarioDtos
 {
-    public class LoginUsuarioDto
+    public class ChangeUserRoleDto
     {
         [Required]
         public string Email { get; set; }
         [Required]
-        public string Senha { get; set; }
-
+        public string Role { get; set; }
     }
 }
