@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-[Table("Polo")]
-public class Polo
+[Table("companies")]
+public class Company
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -12,14 +12,16 @@ public class Polo
     [StringLength(255)]
     public string Name { get; set; }
 
-    [ForeignKey("Region")]
-    public int RegionId { get; set; }
+    [ForeignKey("Polo")]
+    public int PoloId { get; set; }
+    public virtual Polo Polo { get; set; }
 
-    public virtual Region Region { get; set; }
+    public CompanyType Type { get; set; }
 
-    public virtual ICollection<Company> Companies { get; set; }
+    [Column(TypeName = "bigint")]
+    public long Money { get; set; } = 0;
 
     public virtual ICollection<Location> Locations { get; set; }
 
-    public virtual ICollection<Character> Characters { get; set; }
+    public virtual ICollection<CompanyShareholder> CompanyShareholders { get; set; }
 }

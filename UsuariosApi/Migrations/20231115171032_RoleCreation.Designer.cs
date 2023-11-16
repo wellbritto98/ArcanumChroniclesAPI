@@ -11,7 +11,7 @@ using UsuariosApi.Data;
 
 namespace UsuariosApi.Migrations
 {
-    [DbContext(typeof(UsuarioDbContext))]
+    [DbContext(typeof(ACDbContext))]
     [Migration("20231115171032_RoleCreation")]
     partial class RoleCreation
     {
@@ -156,7 +156,7 @@ namespace UsuariosApi.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("UsuariosApi.Models.Usuario", b =>
+            modelBuilder.Entity("UsuariosApi.Models.User", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("text");
@@ -260,7 +260,7 @@ namespace UsuariosApi.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("UsuariosApi.Models.Usuario", null)
+                    b.HasOne("UsuariosApi.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -269,7 +269,7 @@ namespace UsuariosApi.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("UsuariosApi.Models.Usuario", null)
+                    b.HasOne("UsuariosApi.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -284,7 +284,7 @@ namespace UsuariosApi.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("UsuariosApi.Models.Usuario", null)
+                    b.HasOne("UsuariosApi.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -293,7 +293,7 @@ namespace UsuariosApi.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("UsuariosApi.Models.Usuario", null)
+                    b.HasOne("UsuariosApi.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

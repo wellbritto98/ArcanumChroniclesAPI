@@ -23,12 +23,12 @@ namespace UsuariosApi
             // Add services to the container.
 
             builder.Services.AddEntityFrameworkNpgsql()
-                            .AddDbContext<UsuarioDbContext>(options =>
+                            .AddDbContext<ACDbContext>(options =>
                             options.UseNpgsql(connString)
                             );
 
             builder.Services.AddIdentity<Usuario, IdentityRole>()
-                            .AddEntityFrameworkStores<UsuarioDbContext>()
+                            .AddEntityFrameworkStores<ACDbContext>()
                             .AddDefaultTokenProviders();
 
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());

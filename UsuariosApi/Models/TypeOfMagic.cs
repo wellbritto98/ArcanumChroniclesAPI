@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-[Table("Polo")]
-public class Polo
+[Table("TypeOfMagic")]
+public class TypeOfMagic
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -12,14 +12,9 @@ public class Polo
     [StringLength(255)]
     public string Name { get; set; }
 
-    [ForeignKey("Region")]
-    public int RegionId { get; set; }
-
-    public virtual Region Region { get; set; }
-
-    public virtual ICollection<Company> Companies { get; set; }
-
-    public virtual ICollection<Location> Locations { get; set; }
+    [Required]
+    [StringLength(1000)] // Ajuste conforme a necessidade para o tamanho da descrição
+    public string Description { get; set; }
 
     public virtual ICollection<Character> Characters { get; set; }
 }
