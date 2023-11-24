@@ -16,5 +16,8 @@ public class CreateUsuarioDto
     [Compare("Senha")]
     [DataType(DataType.Password)]
     public string ConfirmacaoSenha { get; set; }
+    
+    [Required]
+    public bool AceitaTermos { get; set; }
 
 }

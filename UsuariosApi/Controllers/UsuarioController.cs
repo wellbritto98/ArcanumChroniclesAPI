@@ -3,12 +3,12 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using UsuariosApi.Data.Dtos;
 using UsuariosApi.Data.Dtos.UsuarioDtos;
-using UsuariosApi.Services;
+using UsuariosApi.Services.Usuario;
 
 namespace UsuariosApi.Controllers
 {
     [ApiController]
-    [Route("[Controller]")]
+    [Route("api/[Controller]")]
     public class UsuarioController : ControllerBase
     {
         private UsuarioService _usuarioService;
@@ -19,20 +19,34 @@ namespace UsuariosApi.Controllers
         }
 
         [HttpPost("cadastro")]
-        public async Task<IActionResult> CadastraUsuario
-            (CreateUsuarioDto dto)
+        public async Task<IActionResult> CadastraUsuario(CreateUsuarioDto dto)
         {
-            await _usuarioService.CadastraUsuario(dto);
-            return Ok("Usuário cadastrado!");
-
+            var response = await _usuarioService.CadastraUsuario(dto);
+            if (response.Success)
+            {
+                return Ok(response.Message);
+            }
+            else
+            {
+                return BadRequest(response.Message);
+            }
         }
+
 
         [HttpPost("login")]
         public async Task<IActionResult> LoginAsync(LoginUsuarioDto dto)
         {
-            var token = await _usuarioService.Login(dto);
-            return Ok(token);
+            var response = await _usuarioService.Login(dto);
+            if (response.Success)
+            {
+                return Ok(response);
+            }
+            else
+            {
+                return BadRequest(response.Message);
+            }
         }
+
 
         [HttpGet("Consultar")]
         [Authorize(Roles = "admin")]
@@ -53,27 +67,50 @@ namespace UsuariosApi.Controllers
         [HttpPost("VerificarEmail")]
         public async Task<IActionResult> VerificarEmail(string token)
         {
-            await _usuarioService.VerificarEmail(token);
-            return Ok("Usuario Verificado");
+            var response = await _usuarioService.VerificarEmail(token);
+            if (response.Success)
+            {
+                return Ok(response.Message);
+            }
+            else
+            {
+                return BadRequest(response.Message);
+            }
         }
+
 
         [HttpPost("EsqueciMinhaSenha")]
         public async Task<IActionResult> EsqueciMinhaSenha(string email)
         {
-            await _usuarioService.EsqueciMinhaSenha(email);
-            return Ok("Agora voce pode resetar sua senha");
+           var response = await _usuarioService.EsqueciMinhaSenha(email);
+           if (response.Success)
+           {
+               return Ok(response.Message);
+           }
+           else
+           {
+               return BadRequest(response.Message);
+           }
+            
+            
         }
 
         [HttpPost("ResetarSenha")]
         public async Task<IActionResult> ResetarSenha(ResetPasswordDto dto)
         {
-            await _usuarioService.ResetarSenha(dto);
-            return Ok("Senha resetada com sucesso!");
+           var response = await _usuarioService.ResetarSenha(dto);
+            if (response.Success)
+            {
+                return Ok(response.Message);
+            }
+            else
+            {
+                return BadRequest(response.Message);
+            }
         }
 
         [HttpPost("AlterarRole")]
         [Authorize(Roles = "admin")]
-        
         public async Task<IActionResult> AlterarRoleUsuario(ChangeUserRoleDto dto)
         {
             await _usuarioService.AlterarRoleUsuario(dto);
@@ -81,4 +118,3 @@ namespace UsuariosApi.Controllers
         }
     }
 }
-

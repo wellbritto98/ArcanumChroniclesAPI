@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using UsuariosApi.Enums;
 using UsuariosApi.Models;
@@ -19,8 +18,8 @@ public class Character
     [StringLength(255)]
     public string Surname { get; set; }
 
-    [ForeignKey("User")]
-    public string UserId { get; set; }
+    [ForeignKey("Usuario")]
+    public string UsuarioId { get; set; }
     public virtual Usuario Usuario { get; set; }
 
     [ForeignKey("FatherBackground")]
@@ -52,7 +51,7 @@ public class Character
     public string CharacterAvatarUrl { get; set; }
 
     [ForeignKey("WayOfMagic")]
-    public int WayOfMagicId { get; set; }
+    public int? WayOfMagicId { get; set; }
     public virtual WayOfMagic WayOfMagic { get; set; }
 
     [ForeignKey("TypeOfMagic")]

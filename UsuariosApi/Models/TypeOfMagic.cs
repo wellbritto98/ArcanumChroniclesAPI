@@ -13,7 +13,7 @@ public class TypeOfMagic
     public string Name { get; set; }
 
     [Required]
-    [StringLength(1000)] // Ajuste conforme a necessidade para o tamanho da descrição
+    [StringLength(1000)] 
     public string Description { get; set; }
 
     public virtual ICollection<Character> Characters { get; set; }

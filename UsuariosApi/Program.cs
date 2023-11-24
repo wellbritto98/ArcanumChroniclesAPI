@@ -10,6 +10,10 @@ using UsuariosApi.Authorization;
 using UsuariosApi.Data;
 using UsuariosApi.Models;
 using UsuariosApi.Services;
+using UsuariosApi.Services.BackgroundService;
+using UsuariosApi.Services.CharacterService;
+using UsuariosApi.Services.TypeOfMagicService;
+using UsuariosApi.Services.Usuario;
 
 namespace UsuariosApi
 {
@@ -34,14 +38,20 @@ namespace UsuariosApi
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             builder.Services.AddScoped<UsuarioService>();
+            builder.Services.AddScoped<CharacterService>();
 
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy("AllowSpecificOrigin",
-                    builder => builder.WithOrigins("http://127.0.0.1:5500")
+                    builder => builder
+                        .WithOrigins("http://localhost:3000", "https://localhost:3000", "https://wellbritto98.github.io/arcanum-chronicles/") // Sem barra no final e ambos os protocolos
                         .AllowAnyMethod()
-                        .AllowAnyHeader());
+                        .AllowAnyHeader()
+                        .AllowCredentials()); // Permitir credenciais se você estiver lidando com cookies
             });
+
+
+            builder.Services.AddHttpContextAccessor();
 
             builder.Services.AddScoped<TokenService>();
 
@@ -70,10 +80,13 @@ namespace UsuariosApi
                 policy.AddRequirements(new IdadeMinima(18)));
             });
 
-            
 
-     
 
+
+            builder.Services.AddScoped<NameService>();
+            builder.Services.AddScoped<RegionService>();
+            builder.Services.AddScoped<CharBackgroundService>();
+            builder.Services.AddScoped<TypeOfMagicService>();   
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();

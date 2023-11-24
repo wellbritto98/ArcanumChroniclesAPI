@@ -5,10 +5,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 public class CompanyShareholder
 {
     [Key, Column(Order = 0)]
+    [ForeignKey("Character")]
     [DatabaseGenerated(DatabaseGeneratedOption.None)] 
     public int CharacterId { get; set; }
 
     [Key, Column(Order = 1)]
+    [ForeignKey("Company")]
     [DatabaseGenerated(DatabaseGeneratedOption.None)] 
     public int CompanyId { get; set; }
 
