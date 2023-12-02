@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "NVGCAzjmWNrDGFintaEU5cdw7jJwxcwlA8f6OOdOUKRzkFO4Gwo6Ki5/IDYy59LQJTtytcikiwSwieHPzw287g==",
+  "dgSpecHash": "Az5EYfn2WEx3cb+QYd+SrE6Fu7+uAKKvOWdiZDZOvPCqRh4yjtJEgab6xSQ2+SJAhhGDXJ0g1+CclqZQ0rgldg==",
   "success": true,
-  "projectFilePath": "D:\\Projetos\\Particular\\ArcanumChroniclesAPI\\UsuariosAPI\\UsuariosApi.csproj",
+  "projectFilePath": "D:\\Projetos\\Particular\\ArcanumChroniclesAPI\\UsuariosApi\\UsuariosApi.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\zearq\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\zearq\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",

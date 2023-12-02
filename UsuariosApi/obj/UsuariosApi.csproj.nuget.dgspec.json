@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Projetos\\Particular\\ArcanumChroniclesAPI\\UsuariosAPI\\UsuariosApi.csproj": {}
+    "D:\\Projetos\\Particular\\ArcanumChroniclesAPI\\UsuariosApi\\UsuariosApi.csproj": {}
   },
   "projects": {
-    "D:\\Projetos\\Particular\\ArcanumChroniclesAPI\\UsuariosAPI\\UsuariosApi.csproj": {
+    "D:\\Projetos\\Particular\\ArcanumChroniclesAPI\\UsuariosApi\\UsuariosApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Projetos\\Particular\\ArcanumChroniclesAPI\\UsuariosAPI\\UsuariosApi.csproj",
+        "projectUniqueName": "D:\\Projetos\\Particular\\ArcanumChroniclesAPI\\UsuariosApi\\UsuariosApi.csproj",
         "projectName": "UsuariosApi",
-        "projectPath": "D:\\Projetos\\Particular\\ArcanumChroniclesAPI\\UsuariosAPI\\UsuariosApi.csproj",
+        "projectPath": "D:\\Projetos\\Particular\\ArcanumChroniclesAPI\\UsuariosApi\\UsuariosApi.csproj",
         "packagesPath": "C:\\Users\\zearq\\.nuget\\packages\\",
-        "outputPath": "D:\\Projetos\\Particular\\ArcanumChroniclesAPI\\UsuariosAPI\\obj\\",
+        "outputPath": "D:\\Projetos\\Particular\\ArcanumChroniclesAPI\\UsuariosApi\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\zearq\\AppData\\Roaming\\NuGet\\NuGet.Config",

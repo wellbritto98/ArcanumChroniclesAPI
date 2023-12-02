@@ -42,15 +42,7 @@ namespace UsuariosApi
             builder.Services.AddScoped<CharacterService>();
             builder.Services.AddScoped<EmailService>();
 
-            builder.Services.AddCors(options =>
-            {
-                options.AddPolicy("AllowSpecificOrigin",
-                    builder => builder
-                        .WithOrigins("http://localhost:3000", "https://localhost:3000", "https://wellbritto98.github.io/arcanum-chronicles/") // Sem barra no final e ambos os protocolos
-                        .AllowAnyMethod()
-                        .AllowAnyHeader()
-                        .AllowCredentials()); // Permitir credenciais se você estiver lidando com cookies
-            });
+            builder.Services.AddCors();
 
             
             builder.Services.AddHttpContextAccessor();
@@ -113,7 +105,11 @@ namespace UsuariosApi
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-            app.UseCors("AllowSpecificOrigin");
+            app.UseCors(x => x
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+            );
             app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseAuthorization();
