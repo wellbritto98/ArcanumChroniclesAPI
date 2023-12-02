@@ -33,4 +33,9 @@
     <Folder Include="Migrations\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="Migrations\20231114002300_AddDataNascimentoToUsuario.cs" />
+    <Compile Remove="Migrations\20231114002300_AddDataNascimentoToUsuario.Designer.cs" />
+  </ItemGroup>
+
 </Project>

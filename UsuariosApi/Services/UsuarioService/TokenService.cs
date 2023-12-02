@@ -18,6 +18,7 @@ namespace UsuariosApi.Services
         }
         public string GenerateToken(UsuariosApi.Models.Usuario usuario)
         {
+            var secretKey = _configuration["JwtConfig:Secret"];
             Claim[] claims = new Claim[]
             {
                 new Claim(ClaimTypes.Email, usuario.Email),
@@ -27,7 +28,7 @@ namespace UsuariosApi.Services
 
             };
 
-            var chave = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["SymmetricSecurityKey"]));
+            var chave = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
 
             var signingCredentials = new SigningCredentials(chave, SecurityAlgorithms.HmacSha256Signature);
 

@@ -23,7 +23,7 @@ namespace UsuariosApi
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
+            var secretKey = builder.Configuration["JwtConfig:Secret"];
             var connString = builder.Configuration["ConnectionStrings:DefaultConnection"];
             // Add services to the container.
 
@@ -52,7 +52,7 @@ namespace UsuariosApi
                         .AllowCredentials()); // Permitir credenciais se você estiver lidando com cookies
             });
 
-
+            
             builder.Services.AddHttpContextAccessor();
 
             builder.Services.AddScoped<TokenService>();
@@ -67,7 +67,7 @@ namespace UsuariosApi
                 options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["SymmetricSecurityKey"])),
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey)),
                     ValidateAudience = false,
                     ValidateIssuer = false,
                     ClockSkew = TimeSpan.Zero
