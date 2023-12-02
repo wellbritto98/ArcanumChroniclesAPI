@@ -19,16 +19,18 @@ namespace UsuariosApi.Services.Usuario
         private SignInManager<UsuariosApi.Models.Usuario> _signInManager;
         private TokenService _tokenService;
         private readonly EmailService.EmailService _emailService;
+        private IHttpContextAccessor _httpContextAccessor;
 
         public UsuarioService(IMapper mapper, UserManager<UsuariosApi.Models.Usuario> userManager,
             SignInManager<UsuariosApi.Models.Usuario> signInManager, TokenService tokenService,
-            EmailService.EmailService emailService)
+            EmailService.EmailService emailService, IHttpContextAccessor httpContextAccessor)
         {
             _mapper = mapper;
             _userManager = userManager;
             _signInManager = signInManager;
             _tokenService = tokenService;
             _emailService = emailService;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<ApiResponse> EnviaEmailVerificacao(string email)
@@ -42,11 +44,13 @@ namespace UsuariosApi.Services.Usuario
             var dto = new EmailDto();
             dto.To = usuario.Email;
             dto.Subject = "Clique no link de verificaçao para confirmar seu email";
-            dto.Body = $"https://localhost:7048/api/Usuario/VerificarEmail?token={usuario.VerificationToken}";
+            string webProtocol = _httpContextAccessor.HttpContext.Request.IsHttps ? "https://" : "http://";
+            var host = _httpContextAccessor.HttpContext.Request.Host;
+            dto.Body = $"{webProtocol}{host}/api/Usuario/VerificarEmail?token={usuario.VerificationToken}";
             _emailService.EnviarEmail(dto);
             return new ApiResponse { Success = true, Message = "Email enviado com sucesso!" };
         }
-        
+
         public async Task<ApiResponse> EnviaEmailResetarSenha(string email)
         {
             var usuario = await _userManager.FindByEmailAsync(email);
@@ -58,7 +62,9 @@ namespace UsuariosApi.Services.Usuario
             var dto = new EmailDto();
             dto.To = usuario.Email;
             dto.Subject = "Clique no link para resetar sua senha";
-            dto.Body = $"Acesse o link: http://localhost:3000/resetar-senha e no formulario, informe seu token de resetar senha: {usuario.PasswordResetToken}";
+
+            dto.Body =
+                $"Acesse o link: http://localhost:3000/resetar-senha e no formulario, informe seu token de resetar senha: {usuario.PasswordResetToken}";
             _emailService.EnviarEmail(dto);
             return new ApiResponse { Success = true, Message = "Email enviado com sucesso!" };
         }
@@ -185,7 +191,7 @@ namespace UsuariosApi.Services.Usuario
 
             return usuarioFormatado;
         }
-        
+
         public async Task<ApiResponse> VerificarEmail(string token)
         {
             var usuario = await _userManager.Users.FirstOrDefaultAsync(u => u.VerificationToken == token);
@@ -202,7 +208,7 @@ namespace UsuariosApi.Services.Usuario
 
             return new ApiResponse { Success = true, Message = "Email Verificado !" };
         }
-        
+
         //esqueci minha senha
         public async Task<ApiResponse> EsqueciMinhaSenha(string email)
         {
@@ -216,7 +222,7 @@ namespace UsuariosApi.Services.Usuario
             usuario.PasswordResetToken = CreateRandomToken();
             usuario.ResetTokenExpires = DateTime.UtcNow.AddHours(2);
             await _userManager.UpdateAsync(usuario);
-            
+
             await EnviaEmailResetarSenha(usuario.Email);
 
 
