@@ -6,6 +6,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using UsuariosApi.Data.Dtos;
+using UsuariosApi.Data.Dtos.EmailDto;
 using UsuariosApi.Data.Dtos.UsuarioDtos;
 using UsuariosApi.Models;
 
@@ -17,14 +18,49 @@ namespace UsuariosApi.Services.Usuario
         private UserManager<UsuariosApi.Models.Usuario> _userManager;
         private SignInManager<UsuariosApi.Models.Usuario> _signInManager;
         private TokenService _tokenService;
+        private readonly EmailService.EmailService _emailService;
 
         public UsuarioService(IMapper mapper, UserManager<UsuariosApi.Models.Usuario> userManager,
-            SignInManager<UsuariosApi.Models.Usuario> signInManager, TokenService tokenService)
+            SignInManager<UsuariosApi.Models.Usuario> signInManager, TokenService tokenService,
+            EmailService.EmailService emailService)
         {
             _mapper = mapper;
             _userManager = userManager;
             _signInManager = signInManager;
             _tokenService = tokenService;
+            _emailService = emailService;
+        }
+
+        public async Task<ApiResponse> EnviaEmailVerificacao(string email)
+        {
+            var usuario = await _userManager.FindByEmailAsync(email);
+            if (usuario == null)
+            {
+                return new ApiResponse { Success = false, Message = "Usuário não encontrado!" };
+            }
+
+            var dto = new EmailDto();
+            dto.To = usuario.Email;
+            dto.Subject = "Clique no link de verificaçao para confirmar seu email";
+            dto.Body = $"https://localhost:7048/api/Usuario/VerificarEmail?token={usuario.VerificationToken}";
+            _emailService.EnviarEmail(dto);
+            return new ApiResponse { Success = true, Message = "Email enviado com sucesso!" };
+        }
+        
+        public async Task<ApiResponse> EnviaEmailResetarSenha(string email)
+        {
+            var usuario = await _userManager.FindByEmailAsync(email);
+            if (usuario == null)
+            {
+                return new ApiResponse { Success = false, Message = "Usuário não encontrado!" };
+            }
+
+            var dto = new EmailDto();
+            dto.To = usuario.Email;
+            dto.Subject = "Clique no link para resetar sua senha";
+            dto.Body = $"Acesse o link: http://localhost:3000/resetar-senha e no formulario, informe seu token de resetar senha: {usuario.PasswordResetToken}";
+            _emailService.EnviarEmail(dto);
+            return new ApiResponse { Success = true, Message = "Email enviado com sucesso!" };
         }
 
         //cadastrar usuario
@@ -68,7 +104,12 @@ namespace UsuariosApi.Services.Usuario
                         { Success = false, Message = $"Falha ao cadastrar usuário: {string.Join(", ", errors)}" };
                 }
 
-                return new ApiResponse { Success = true, Message = "Usuário cadastrado com sucesso!" };
+                await EnviaEmailVerificacao(usuario.Email);
+                return new ApiResponse
+                {
+                    Success = true,
+                    Message = "Usuário cadastrado com sucesso! Verifique sua conta no link que enviamos por email"
+                };
             }
         }
 
@@ -80,7 +121,7 @@ namespace UsuariosApi.Services.Usuario
 
             if (!resultado.Succeeded)
             {
-                return new ApiResponse { Success = false, Message = "Usuário não autenticado!" };
+                return new ApiResponse { Success = false, Message = "Usuário ou senha incorretos." };
             }
 
 
@@ -103,12 +144,11 @@ namespace UsuariosApi.Services.Usuario
             }
 
             var token = _tokenService.GenerateToken(usuario);
-            var tokenExpiresIn = _tokenService.TokenExpiresIn();
 
             var response = new LoginResponse
             {
                 Token = token,
-                TokenExpiresAt = tokenExpiresIn
+                hasCharacter = usuario.hasCharacter
             };
 
             return new ApiResponse { Success = true, Message = "Login bem-sucedido!", Data = response };
@@ -145,8 +185,7 @@ namespace UsuariosApi.Services.Usuario
 
             return usuarioFormatado;
         }
-
-        //verificar email
+        
         public async Task<ApiResponse> VerificarEmail(string token)
         {
             var usuario = await _userManager.Users.FirstOrDefaultAsync(u => u.VerificationToken == token);
@@ -160,11 +199,10 @@ namespace UsuariosApi.Services.Usuario
             usuario.VerificationToken = null;
             usuario.VerificationTokenExpires = null;
             await _userManager.UpdateAsync(usuario);
-            
 
             return new ApiResponse { Success = true, Message = "Email Verificado !" };
         }
-
+        
         //esqueci minha senha
         public async Task<ApiResponse> EsqueciMinhaSenha(string email)
         {
@@ -178,10 +216,11 @@ namespace UsuariosApi.Services.Usuario
             usuario.PasswordResetToken = CreateRandomToken();
             usuario.ResetTokenExpires = DateTime.UtcNow.AddHours(2);
             await _userManager.UpdateAsync(usuario);
-
             
+            await EnviaEmailResetarSenha(usuario.Email);
 
-            return new ApiResponse { Success = true, Message = "Token de resetar senha gerado !" };
+
+            return new ApiResponse { Success = true, Message = "Token de resetar senha gerado e enviado por email !" };
         }
 
         //resetar senha
@@ -204,7 +243,7 @@ namespace UsuariosApi.Services.Usuario
             IdentityResult resultado = await _userManager.ResetPasswordAsync(usuario, dto.Token, dto.Senha);
             usuario.ResetTokenExpires = null;
             await _userManager.UpdateAsync(usuario);
-            
+
             return new ApiResponse { Success = true, Message = "Senha resetada com sucesso!" };
         }
 
@@ -230,6 +269,20 @@ namespace UsuariosApi.Services.Usuario
             else
             {
                 throw new ApplicationException("Role inválida.");
+            }
+        }
+
+        public async Task<ApiResponse> VerificaJWTUsuario(string token)
+        {
+            var verify = _tokenService.VerificaSeTokenJWTEValido(token);
+
+            if (verify == false)
+            {
+                return new ApiResponse { Success = false, Message = "Token inválido!" };
+            }
+            else
+            {
+                return new ApiResponse { Success = true, Message = "Token válido!" };
             }
         }
 

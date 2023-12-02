@@ -15,6 +15,8 @@ namespace UsuariosApi.Models
         public DateTime? VerifiedAt { get; set; }
         public string PasswordResetToken { get; set; }
         public DateTime? ResetTokenExpires { get; set; }
+        
+        public bool hasCharacter { get; set; }
 
         public virtual ICollection<Character> Characters { get; set; }
 

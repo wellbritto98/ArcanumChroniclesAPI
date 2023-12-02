@@ -12,6 +12,7 @@ using UsuariosApi.Models;
 using UsuariosApi.Services;
 using UsuariosApi.Services.BackgroundService;
 using UsuariosApi.Services.CharacterService;
+using UsuariosApi.Services.EmailService;
 using UsuariosApi.Services.TypeOfMagicService;
 using UsuariosApi.Services.Usuario;
 
@@ -39,6 +40,7 @@ namespace UsuariosApi
 
             builder.Services.AddScoped<UsuarioService>();
             builder.Services.AddScoped<CharacterService>();
+            builder.Services.AddScoped<EmailService>();
 
             builder.Services.AddCors(options =>
             {

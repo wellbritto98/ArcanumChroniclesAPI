@@ -7,7 +7,7 @@ using UsuariosApi.Services.CharacterService;
 namespace UsuariosApi.Controllers
 {
     [ApiController]
-    [Route("[Controller]")]
+    [Route("api/[Controller]")]
     public class CharacterController : ControllerBase
     {
         private CharacterService _characterServices;
@@ -22,13 +22,13 @@ namespace UsuariosApi.Controllers
         public async Task<IActionResult> CreateCharacter(CreateCharacterDto dto)
         {
             var resultado = await _characterServices.CriaPersonagem(dto);
-            if (resultado.Sucesso)
+            if (resultado.Success)
             {
-                return Ok(resultado.Mensagem);
+                return Ok(resultado);
             }
             else
             {
-                return BadRequest(resultado.Mensagem);
+                return BadRequest(resultado);
             }
         }
 

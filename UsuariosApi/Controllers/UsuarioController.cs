@@ -43,7 +43,7 @@ namespace UsuariosApi.Controllers
             }
             else
             {
-                return BadRequest(response.Message);
+                return BadRequest(response);
             }
         }
 
@@ -64,7 +64,20 @@ namespace UsuariosApi.Controllers
             return Ok(usuarioFormatado);
         }
 
-        [HttpPost("VerificarEmail")]
+        /* [HttpPost("VerificarEmail")]
+         public async Task<IActionResult> VerificarEmail(string token)
+         {
+             var response = await _usuarioService.VerificarEmail(token);
+             if (response.Success)
+             {
+                 return Ok(response.Message);
+             }
+             else
+             {
+                 return BadRequest(response.Message);
+             }
+         }*/
+        [HttpGet("VerificarEmail")]
         public async Task<IActionResult> VerificarEmail(string token)
         {
             var response = await _usuarioService.VerificarEmail(token);
@@ -82,23 +95,21 @@ namespace UsuariosApi.Controllers
         [HttpPost("EsqueciMinhaSenha")]
         public async Task<IActionResult> EsqueciMinhaSenha(string email)
         {
-           var response = await _usuarioService.EsqueciMinhaSenha(email);
-           if (response.Success)
-           {
-               return Ok(response.Message);
-           }
-           else
-           {
-               return BadRequest(response.Message);
-           }
-            
-            
+            var response = await _usuarioService.EsqueciMinhaSenha(email);
+            if (response.Success)
+            {
+                return Ok(response.Message);
+            }
+            else
+            {
+                return BadRequest(response.Message);
+            }
         }
 
         [HttpPost("ResetarSenha")]
         public async Task<IActionResult> ResetarSenha(ResetPasswordDto dto)
         {
-           var response = await _usuarioService.ResetarSenha(dto);
+            var response = await _usuarioService.ResetarSenha(dto);
             if (response.Success)
             {
                 return Ok(response.Message);
@@ -115,6 +126,34 @@ namespace UsuariosApi.Controllers
         {
             await _usuarioService.AlterarRoleUsuario(dto);
             return Ok("Role alterada com sucesso!");
+        }
+
+        [HttpPost("VerificaJWT")]
+        public async Task<IActionResult> VerificaJWT(string token)
+        {
+            var response = await _usuarioService.VerificaJWTUsuario(token);
+            if (response.Success)
+            {
+                return Ok(response.Message);
+            }
+            else
+            {
+                return BadRequest(response.Message);
+            }
+        }
+
+        [HttpPost("ReenviarEmailVerificacao")]
+        public async Task<IActionResult> ReenviarEmailVerificacao(string email)
+        {
+            var response = await _usuarioService.EnviaEmailVerificacao(email);
+            if (response.Success)
+            {
+                return Ok(response.Message);
+            }
+            else
+            {
+                return BadRequest(response.Message);
+            }
         }
     }
 }
