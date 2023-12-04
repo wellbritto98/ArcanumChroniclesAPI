@@ -46,8 +46,9 @@ namespace UsuariosApi.Services
 
         public bool VerificaSeTokenJWTEValido(string token)
         {
+            var secretKey = _configuration["JwtConfig:Secret"];
             var tokenHandler = new JwtSecurityTokenHandler();
-            var chave = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["SymmetricSecurityKey"]));
+            var chave = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
     
             try
             {

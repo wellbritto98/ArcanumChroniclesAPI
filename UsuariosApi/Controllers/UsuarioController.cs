@@ -129,7 +129,7 @@ namespace UsuariosApi.Controllers
         }
 
         [HttpPost("VerificaJWT")]
-        public async Task<IActionResult> VerificaJWT(string token)
+        public async Task<IActionResult> VerificaJwt(string token)
         {
             var response = await _usuarioService.VerificaJWTUsuario(token);
             if (response.Success)
