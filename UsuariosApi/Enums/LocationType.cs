@@ -2,5 +2,6 @@
 {
     Loja = 1,
     Parque = 2,
-    Escola = 3
+    Escola = 3,
+    Residencia= 4,
 }
