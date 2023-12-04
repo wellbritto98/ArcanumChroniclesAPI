@@ -41,7 +41,7 @@ namespace UsuariosApi.Services.CharacterService
                 character.ChildhoodBackgroundId = character.ChildhoodBackgroundId;
                 character.CharacterAvatarUrl = character.CharacterAvatarUrl;
                 character.BirthPoloId = character.BirthPoloId;
-                character.CurrentLocationId = character.BirthPoloId == 1 ? 1 : character.BirthPoloId == 2 ? 3 : 0;
+                character.CurrentLocationId = _context.Polos.FirstOrDefault(x => x.Id == character.BirthPoloId).Id;
                 character.TypeOfMagicId = character.TypeOfMagicId;
                 character.WayOfMagicId = character.TypeOfMagicId == 1 ? null : 1;
                 usuario.hasCharacter = true;
