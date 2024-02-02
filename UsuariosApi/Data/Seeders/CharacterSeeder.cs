@@ -20,8 +20,12 @@ public class CharacterSeeder
                 BirthDate = DateTime.UtcNow,
                 BirthPoloId = 1,
                 CurrentLocationId = 1,
+                Age = 20,
                 CharacterAvatarUrl =
                     "https://img.freepik.com/fotos-gratis/homem-bonito-posando-e-sorrindo_23-2149396133.jpg",
+                Thinkings = "Eu sou um personagem de teste",
+                Energy = 100,
+                Health = 100,
                 WayOfMagicId = 1,
                 TypeOfMagicId = 1
             });

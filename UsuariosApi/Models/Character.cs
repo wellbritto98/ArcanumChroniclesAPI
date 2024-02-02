@@ -39,6 +39,10 @@ public class Character
 
     [Required]
     public DateTime BirthDate { get; set; }
+    
+    [Required]
+    [MinLength(0)]
+    public int Age { get; set; }
 
     [ForeignKey("BirthPolo")]
     public int BirthPoloId { get; set; }
@@ -48,7 +52,21 @@ public class Character
     public int CurrentLocationId { get; set; }
     public virtual Location CurrentLocation { get; set; }
 
-    public string CharacterAvatarUrl { get; set; }
+    public string? CharacterAvatarUrl { get; set; }
+    
+    [MaxLength(255)]
+    public string? Thinkings { get; set; }
+
+    [Required]
+    [MaxLength(100)]
+    [MinLength(0)]
+    public int Energy { get; set; } = 100;
+    
+    [Required]
+    [MaxLength(100)]
+    [MinLength(0)]
+    public int Health { get; set; } = 100;
+    
 
     [ForeignKey("WayOfMagic")]
     public int? WayOfMagicId { get; set; }
@@ -57,4 +75,8 @@ public class Character
     [ForeignKey("TypeOfMagic")]
     public int TypeOfMagicId { get; set; }
     public virtual TypeOfMagic TypeOfMagic { get; set; }
+    
+    
+    
+    
 }

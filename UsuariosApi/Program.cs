@@ -9,6 +9,7 @@ using System.Text;
 using UsuariosApi.Authorization;
 using UsuariosApi.Data;
 using UsuariosApi.Models;
+using UsuariosApi.Repository;
 using UsuariosApi.Services;
 using UsuariosApi.Services.BackgroundService;
 using UsuariosApi.Services.CharacterService;
@@ -76,6 +77,7 @@ namespace UsuariosApi
 
 
 
+            builder.Services.AddScoped<ICharacterRepository, CharacterRepository>();
 
             builder.Services.AddScoped<NameService>();
             builder.Services.AddScoped<RegionService>();

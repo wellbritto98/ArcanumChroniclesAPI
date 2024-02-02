@@ -22,7 +22,8 @@ public class UsuarioSeeder
             EmailConfirmed = true,
             SecurityStamp = string.Empty,
             RegisteredAt = DateTime.UtcNow,
-            Role = "Admin"
+            Role = "Admin",
+            
         };
 
         // Set the user password

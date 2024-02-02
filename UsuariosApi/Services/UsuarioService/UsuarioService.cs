@@ -1,4 +1,5 @@
 ﻿
+using System.Security.Claims;
 using System.Security.Cryptography;
 
 using AutoMapper;
@@ -148,15 +149,20 @@ namespace UsuariosApi.Services.Usuario
                 return new ApiResponse { Success = false, Message = "Usuário não encontrado!" };
             }
 
-            var token = _tokenService.GenerateToken(usuario);
-
-            var response = new LoginResponse
+            var jwtTokenDto = new JwtTokenDto
             {
-                Token = token,
-                hasCharacter = usuario.hasCharacter
+                Email = usuario.Email,
+                Id = usuario.Id,
+                Role = usuario.Role,
+                hasCharacter = usuario.hasCharacter,
+                MainCharacterId = usuario.MainCharacterId,
+                ActiveCharacter = usuario.MainCharacterId
             };
 
-            return new ApiResponse { Success = true, Message = "Login bem-sucedido!", Data = response };
+            var token = _tokenService.GenerateToken(jwtTokenDto);
+            
+
+            return new ApiResponse { Success = true, Message = "Login bem-sucedido!", Data = token };
         }
 
         //consultar usuario
@@ -173,6 +179,11 @@ namespace UsuariosApi.Services.Usuario
             });
 
             return usuariosFormatados;
+        }
+        
+        public string GetCurrentUserId()
+        {
+            return _httpContextAccessor.HttpContext.User.FindFirstValue("id");
         }
 
         //consultar usuario por ID

@@ -35,7 +35,7 @@ namespace UsuariosApi.Data
             base.OnModelCreating(modelBuilder);
             
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ACDbContext).Assembly);
-
+            
             SeedDatabase(modelBuilder);
         }
         private void SeedDatabase(ModelBuilder modelBuilder)

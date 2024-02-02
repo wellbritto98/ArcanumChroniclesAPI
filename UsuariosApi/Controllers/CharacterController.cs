@@ -31,6 +31,55 @@ namespace UsuariosApi.Controllers
                 return BadRequest(resultado);
             }
         }
+        
+        [HttpGet ("GetCharacter")]
+        [Authorize (Roles = "player, admin")]
+        public async Task<IActionResult> GetCharacter(int id)
+        {
+            var resultado = await _characterServices.GetCharacter(id);
+            if (resultado.Success)
+            {
+                return Ok(resultado);
+            }
+            else
+            {
+                return BadRequest(resultado);
+            }
+            
+        }
+        
+        [HttpGet ("VerifyCharOwner")]
+        [Authorize (Roles = "player, admin")]
+        public async Task<IActionResult> VerifyCharOwner(int id)
+        {
+            var resultado = await _characterServices.VerifyCharOwner(id);
+            if (resultado.Success)
+            {
+                return Ok(resultado.Success);
+            }
+            else
+            {
+                return BadRequest(resultado.Message);
+            }
+            
+        }
+        
+        [HttpGet ("ChangeActiveCharacter")]
+        [Authorize (Roles = "player, admin")]
+        public async Task<IActionResult> ChangeActiveCharacter(int id)
+        {
+            var resultado = await _characterServices.ChangeActiveCharacter(id);
+            if (resultado.Success)
+            {
+                return Ok(resultado);
+            }
+            else
+            {
+                return BadRequest(resultado);
+            }
+            
+        }
+        
 
     }
 }

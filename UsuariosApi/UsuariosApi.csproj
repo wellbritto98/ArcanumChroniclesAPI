@@ -31,7 +31,15 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
-    <Folder Include="NovaPasta\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="output.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20240102153905_newcolumnscharacter.cs" />
+    <Compile Remove="Migrations\20240102153905_newcolumnscharacter.Designer.cs" />
   </ItemGroup>
 
 </Project>

@@ -2679,19 +2679,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\zearq\\.nuget\\packages\\": {}
+    "C:\\Users\\britto\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Projetos\\Particular\\ArcanumChroniclesAPI\\UsuariosApi\\UsuariosApi.csproj",
+      "projectUniqueName": "C:\\Users\\britto\\source\\repos\\UsuariosApi\\UsuariosApi\\UsuariosApi.csproj",
       "projectName": "UsuariosApi",
-      "projectPath": "D:\\Projetos\\Particular\\ArcanumChroniclesAPI\\UsuariosApi\\UsuariosApi.csproj",
-      "packagesPath": "C:\\Users\\zearq\\.nuget\\packages\\",
-      "outputPath": "D:\\Projetos\\Particular\\ArcanumChroniclesAPI\\UsuariosApi\\obj\\",
+      "projectPath": "C:\\Users\\britto\\source\\repos\\UsuariosApi\\UsuariosApi\\UsuariosApi.csproj",
+      "packagesPath": "C:\\Users\\britto\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\britto\\source\\repos\\UsuariosApi\\UsuariosApi\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\zearq\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\britto\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -2699,7 +2704,9 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "https://api.nuget.org/v3/index.json": {}
+        "C:\\Program Files\\dotnet\\library-packs": {},
+        "https://api.nuget.org/v3/index.json": {},
+        "https://nuget.devexpress.com/e4rpoxhjxpUubH4pHPxTms3TSvbyp8uPmHrrW2qzQ9NyoWqFJr/api": {}
       },
       "frameworks": {
         "net6.0": {
